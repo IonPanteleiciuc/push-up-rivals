@@ -11,6 +11,10 @@ services:
       - ./push-up-rivals:/app
     networks:
       - proxy_network
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
   
   postgresql-pr:
     container_name: db-pr
