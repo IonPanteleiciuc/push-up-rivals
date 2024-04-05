@@ -5,11 +5,13 @@ import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import { createUser } from "../app/actions";
 
 export default function SignUpForm() {
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
+
 		console.log({
 			firstname: data.get("firstName"),
 			name: data.get("lastName"),
@@ -17,6 +19,8 @@ export default function SignUpForm() {
 			password: data.get("password"),
 			confirmPassword: data.get("confirmPassword"),
 		});
+
+		createUser(data);
 	};
 
 	return (
