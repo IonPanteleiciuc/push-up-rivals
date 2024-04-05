@@ -1,10 +1,10 @@
-// import SignOutButton from "@/components/SignOutButton";
+import SignOutButton from "@/components/SignOutButton";
 import { requireActiveSession } from "@/lib/helperFunctions";
 import { Box, Container, Typography } from "@mui/material";
 import { Session } from "next-auth";
 
 export default async function Home() {
-	// const session: Session = await requireActiveSession();
+	const session: Session = await requireActiveSession();
 
 	return (
 		<Container component="main">
@@ -17,8 +17,8 @@ export default async function Home() {
 					gap: 2,
 				}}
 			>
-				<Typography>Connected user</Typography>
-				{/* <SignOutButton /> */}
+				<Typography>Connected user {session.user?.email}</Typography>
+				<SignOutButton />
 			</Box>
 		</Container>
 	);
