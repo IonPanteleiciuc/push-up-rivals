@@ -1,54 +1,82 @@
 "use server";
 
-import { User, Day } from "@prisma/client";
+import { User } from "@prisma/client";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import prisma from "@/lib/prismaClient";
 
 const schema = z.object({
 	email: z.string().email().min(1),
-	firstname: z.string().min(1),
-	name: z.string().min(1),
-	password: z.string().min(1),
-	confirmPassword: z.string().min(1),
+	firstname: z.string().min(1).max(20),
+	name: z.string().min(1).max(20),
+	password: z
+		.string()
+		.min(8)
+		.regex(
+			/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*,.()_-])(?!.*\s).+$/
+		),
+	confirmPassword: z
+		.string()
+		.min(8)
+		.regex(
+			/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*,.()_-])(?!.*\s).+$/
+		),
 });
 
-export const createUser = async (formData: FormData): Promise<User> => {
-	const email = formData.get("email") as string;
-	const firstname = formData.get("firstName") as string;
-	const name = formData.get("lastName") as string;
-	const password = formData.get("password") as string;
-	const confirmPassword = formData.get("confirmPassword") as string;
+type SignUpForm = {
+	name: string;
+	firstname: string;
+	email: string;
+	password: string;
+	confirmPassword: string;
+};
 
-	const validatedDate = schema.parse({
-		email,
-		firstname,
-		name,
-		password,
-		confirmPassword,
+export const createUser = async (
+	data: SignUpForm
+): Promise<User | undefined> => {
+	const validatedData = schema.parse({
+		name: data.name,
+		firstname: data.firstname,
+		email: data.email,
+		password: data.password,
+		confirmPassword: data.confirmPassword,
 	});
 
-	if (password !== confirmPassword) {
+	if (validatedData.password !== validatedData.confirmPassword) {
 		throw new Error("Password don't match");
 	}
 
-	const hash = await hashData(password);
+	const hash = await hashData(validatedData.password);
 
 	const user: User = await prisma.user.create({
 		data: {
-			email,
-			firstname,
-			name,
+			email: validatedData.email,
+			firstname: validatedData.firstname,
+			name: validatedData.name,
 			password: hash,
 		},
 	});
 
-	createToday(user.id);
+	if (user) {
+		createToday(user.id);
+		return user;
+	}
 
-	return user;
+	return;
 };
 
-const createToday = async (userId: string): Day => {
+export const checkIfEmailIsAlreadyUsed = async (
+	email: string
+): Promise<boolean> => {
+	try {
+		const user = await prisma.user.findUnique({ where: { email } });
+		return !!user;
+	} catch (error) {
+		return false;
+	}
+};
+
+const createToday = async (userId: string): Promise<void> => {
 	await prisma.day.create({
 		data: {
 			userId,

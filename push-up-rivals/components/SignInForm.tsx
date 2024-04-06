@@ -10,12 +10,16 @@ import Box from "@mui/material/Box";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { getCallbackUrl } from "@/lib/helperFunctions";
+import { Typography } from "@mui/material";
 
 export default function SignInForm() {
 	const router = useRouter();
+	const [error, setError] = React.useState(false);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		setError(false);
+
 		const data = new FormData(event.currentTarget);
 
 		const response = await signIn("credentials", {
@@ -29,7 +33,7 @@ export default function SignInForm() {
 		}
 
 		if (response.status === 401) {
-			console.log("Handle error !");
+			setError(true);
 			return;
 		}
 
@@ -48,6 +52,7 @@ export default function SignInForm() {
 				autoFocus
 				fullWidth
 				required
+				error={error}
 			/>
 			<TextField
 				id="password"
@@ -58,7 +63,11 @@ export default function SignInForm() {
 				margin="normal"
 				fullWidth
 				required
+				error={error}
 			/>
+			<Typography color="error">
+				{error ? "Wrong credentials" : ""}
+			</Typography>
 			<FormControlLabel
 				control={<Checkbox value="remember" color="primary" />}
 				label="Remember me"
