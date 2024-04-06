@@ -1,11 +1,10 @@
-import ResponsiveAppBar from "@/components/AppBar";
-import SignOutButton from "@/components/SignOutButton";
 import { requireActiveSession } from "@/lib/helperFunctions";
 import { Box, Container, Typography } from "@mui/material";
-import { Session } from "next-auth";
 import prisma from "@/lib/prismaClient";
+import { Session } from "next-auth";
+import ResponsiveAppBar from "@/components/AppBar";
 
-export default async function Home() {
+export default async function LeaderboardPage() {
 	const session: Session = await requireActiveSession();
 
 	if (!session) {
@@ -29,7 +28,7 @@ export default async function Home() {
 					connectedUser?.firstname[0] + connectedUser?.name[0]
 				}
 			/>
-			<Container component="main">
+			<Container>
 				<Box
 					sx={{
 						display: "flex",
@@ -37,9 +36,7 @@ export default async function Home() {
 						alignItems: "center",
 					}}
 				>
-					<Typography>
-						This is the dashboard page of {connectedUser.name}
-					</Typography>
+					<Typography>This is the leaderboard page.</Typography>
 				</Box>
 			</Container>
 		</>
