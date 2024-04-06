@@ -3,3 +3,10 @@
 	padding: 0;
 	margin: 0;
 }
+
+@font-face {
+	font-family: "Azonix";
+	src: url("../public/fonts/Azonix.otf") format("opentype");
+	font-weight: normal;
+	font-style: normal;
+}

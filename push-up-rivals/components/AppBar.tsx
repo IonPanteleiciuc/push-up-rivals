@@ -12,12 +12,12 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const pages = ["Dashboard", "Leaderboard"];
 const settings = ["Profile", "Logout"];
+const logo = "Push-ups League";
 
 function ResponsiveAppBar(props: { userInitials: string }) {
 	const router = useRouter();
@@ -61,9 +61,6 @@ function ResponsiveAppBar(props: { userInitials: string }) {
 		<AppBar position="static">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					<AdbIcon
-						sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-					/>
 					<Typography
 						variant="h6"
 						noWrap
@@ -73,15 +70,14 @@ function ResponsiveAppBar(props: { userInitials: string }) {
 						sx={{
 							mr: 2,
 							display: { xs: "none", md: "flex" },
-							fontFamily: "monospace",
 							fontWeight: 700,
-							letterSpacing: ".3rem",
-							color: "inherit",
+							color: "primary.main",
 							textDecoration: "none",
 							cursor: "pointer",
+							fontFamily: "Azonix",
 						}}
 					>
-						League
+						{logo}
 					</Typography>
 
 					<Box
@@ -127,6 +123,7 @@ function ResponsiveAppBar(props: { userInitials: string }) {
 											: router.push(
 													`/${page.toLocaleLowerCase()}`
 											  );
+										handleCloseNavMenu();
 									}}
 								>
 									<Typography textAlign="center">
@@ -136,27 +133,20 @@ function ResponsiveAppBar(props: { userInitials: string }) {
 							))}
 						</Menu>
 					</Box>
-					<AdbIcon
-						sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-					/>
 					<Typography
 						variant="h5"
 						noWrap
-						component="a"
-						href="#app-bar-with-responsive-menu"
 						sx={{
 							mr: 2,
 							display: { xs: "flex", md: "none" },
 							flexGrow: 1,
-							fontFamily: "monospace",
-							border: "red 1px solid",
 							fontWeight: 700,
-							letterSpacing: ".3rem",
-							color: "inherit",
+							color: "primary.main",
 							textDecoration: "none",
+							fontFamily: "Azonix",
 						}}
 					>
-						League
+						{logo}
 					</Typography>
 					<Box
 						sx={{
@@ -173,6 +163,7 @@ function ResponsiveAppBar(props: { userInitials: string }) {
 										: router.push(
 												`/${page.toLocaleLowerCase()}`
 										  );
+									handleCloseNavMenu();
 								}}
 								sx={{ my: 2, color: "white", display: "block" }}
 							>
@@ -187,7 +178,9 @@ function ResponsiveAppBar(props: { userInitials: string }) {
 								onClick={handleOpenUserMenu}
 								sx={{ p: 0 }}
 							>
-								<Avatar>{props.userInitials}</Avatar>
+								<Avatar sx={{ bgcolor: "secondary.main" }}>
+									{props.userInitials}
+								</Avatar>
 							</IconButton>
 						</Tooltip>
 						<Menu
