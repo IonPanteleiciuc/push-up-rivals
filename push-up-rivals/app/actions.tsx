@@ -1,9 +1,9 @@
 "use server";
 
-import { PrismaClient, User, Day } from "@prisma/client";
+import { User, Day } from "@prisma/client";
 import { z } from "zod";
-
-const prisma = new PrismaClient();
+import bcrypt from "bcrypt";
+import prisma from "@/lib/prismaClient";
 
 const schema = z.object({
 	email: z.string().email().min(1),
@@ -32,22 +32,34 @@ export const createUser = async (formData: FormData): Promise<User> => {
 		throw new Error("Password don't match");
 	}
 
+	const hash = await hashData(password);
+
 	const user: User = await prisma.user.create({
 		data: {
-			email: validatedDate.email,
-			firstname: validatedDate.firstname,
-			name: validatedDate.name,
-			password: validatedDate.password,
+			email,
+			firstname,
+			name,
+			password: hash,
 		},
 	});
+
+	createToday(user.id);
 
 	return user;
 };
 
-// const createToday = async (userId: string): Day => {
-// 	await prisma.day.create({
-// 		data: {
-// 			userId,
-// 		},
-// 	});
-// };
+const createToday = async (userId: string): Day => {
+	await prisma.day.create({
+		data: {
+			userId,
+		},
+	});
+};
+
+const hashData = (data: string): Promise<string> => {
+	return bcrypt.hash(data, 10);
+};
+
+export const doPasswordMatch = async (dbHash: string, password: string) => {
+	return await bcrypt.compare(password, dbHash);
+};

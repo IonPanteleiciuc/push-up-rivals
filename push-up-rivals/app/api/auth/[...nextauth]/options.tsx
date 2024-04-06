@@ -1,9 +1,7 @@
 import { NextAuthOptions, RequestInternal, getServerSession } from "next-auth";
-import { PrismaClient } from "@prisma/client";
 import CredentialsProvider from "next-auth/providers/credentials";
-// import * as bcrypt from "bcrypt";
-
-const prisma = new PrismaClient();
+import { doPasswordMatch } from "@/app/actions";
+import prisma from "@/lib/prismaClient";
 
 type Credentials = {
 	email: string;
@@ -12,7 +10,6 @@ type Credentials = {
 
 export const options: NextAuthOptions = {
 	providers: [
-		// Crediential providers
 		CredentialsProvider({
 			name: "Credentials",
 			credentials: {
@@ -45,7 +42,13 @@ export const options: NextAuthOptions = {
 					},
 				});
 
-				if (dbUser && credentials.password === dbUser.password) {
+				if (
+					dbUser &&
+					(await doPasswordMatch(
+						dbUser.password,
+						credentials.password
+					))
+				) {
 					const { id, email } = dbUser;
 					return { id, email };
 				}
@@ -55,7 +58,3 @@ export const options: NextAuthOptions = {
 		}),
 	],
 };
-
-// const doPasswordMatch = async (dbHash: string, password: string) => {
-// 	return await bcrypt.compare(password, dbHash);
-// };

@@ -11,6 +11,7 @@ export default function SignUpForm() {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
+		console.log("data: ", data);
 		createUser(data);
 	};
 
