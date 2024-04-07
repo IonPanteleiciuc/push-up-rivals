@@ -8,6 +8,9 @@ import WidgetAvg from "@/components/widgets/WidgetAvg";
 import { Suspense } from "react";
 import Loading from "./loading";
 import LoadingWidget from "@/components/widgets/LoadingWidget";
+import RandomButton from "@/components/RandomButton";
+import WidgetTotal from "@/components/widgets/WidgetTotal";
+import WidgetToday from "@/components/widgets/WidgetToday";
 
 export default async function Home() {
 	const session: Session = await requireActiveSession();
@@ -36,7 +39,6 @@ export default async function Home() {
 				}
 			/>
 			<Container component="main" maxWidth="xl">
-				This is the dashboard page of {connectedUser.name}
 				<Grid
 					container
 					spacing={3}
@@ -46,7 +48,17 @@ export default async function Home() {
 				>
 					<Grid item xs={12} md={6} lg={3}>
 						<Suspense fallback={<LoadingWidget />}>
-							<WidgetAvg />
+							<WidgetTotal userId={connectedUser.id} />
+						</Suspense>
+					</Grid>
+					<Grid item xs={12} md={6} lg={3}>
+						<Suspense fallback={<LoadingWidget />}>
+							<WidgetAvg userId={connectedUser.id} />
+						</Suspense>
+					</Grid>
+					<Grid item xs={12} md={6} lg={3}>
+						<Suspense fallback={<LoadingWidget />}>
+							<WidgetToday userId={connectedUser.id} />
 						</Suspense>
 					</Grid>
 				</Grid>

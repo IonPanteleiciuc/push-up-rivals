@@ -1,9 +1,9 @@
-import { getAvgPushups } from "@/app/actions/dashboardActions";
+import { getTotalPushups } from "@/app/actions/dashboardActions";
 import { Box, Paper, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
-export default async function WidgetAvg(props: { userId: string }) {
-	const avgPushups = await getAvgPushups(props.userId, 7);
+export default async function WidgetTotal(props: { userId: string }) {
+	const totalPushups = await getTotalPushups(props.userId, 7);
 
 	return (
 		<Paper variant="outlined">
@@ -20,7 +20,7 @@ export default async function WidgetAvg(props: { userId: string }) {
 						cursor: "default",
 					}}
 				>
-					Avg. push-ups /day
+					Total push-ups
 				</Typography>
 				<Typography
 					sx={{
@@ -30,7 +30,7 @@ export default async function WidgetAvg(props: { userId: string }) {
 						cursor: "default",
 					}}
 				>
-					{avgPushups.lastNDaysAvg}
+					{totalPushups.totalPushups}
 				</Typography>
 				<Typography
 					sx={{
@@ -38,8 +38,7 @@ export default async function WidgetAvg(props: { userId: string }) {
 						cursor: "default",
 					}}
 				>
-					{avgPushups.evolution > 0 ? "+" : ""}
-					{avgPushups.evolution} % from last 7 days
+					+{totalPushups.evolution} over last 7 days
 				</Typography>
 			</Box>
 		</Paper>

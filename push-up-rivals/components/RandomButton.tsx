@@ -4,7 +4,7 @@ import { Box, Button } from "@mui/material";
 
 export default function RandomButton(props: { userId: string }) {
 	const handleDayCreation = async () => {
-		// await createNdays(props.userId, 60, new Date());
+		await createNdays(props.userId, 60, new Date());
 	};
 
 	return (

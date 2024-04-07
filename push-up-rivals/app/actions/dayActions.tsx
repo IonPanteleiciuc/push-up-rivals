@@ -18,10 +18,11 @@ export const createFromLastDayToToday = async (userId: string) => {
 		orderBy: { dateTime: "desc" },
 	});
 
-	const lastDay = getMidnightDate(days[0].dateTime);
-	const today = getMidnightDate(
-		new Date(new Date().toLocaleDateString("fr-FR"))
-	);
+	const lastDay = days[0].dateTime;
+	lastDay.setHours(0, 0, 0, 0);
+
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
 
 	if (today <= lastDay) {
 		return;
@@ -55,8 +56,4 @@ export async function createNdays(userId: string, n: number, today: Date) {
 		});
 		n--;
 	}
-}
-
-function getMidnightDate(date: Date): Date {
-	return new Date(date.toLocaleDateString("fr-FR"));
 }
