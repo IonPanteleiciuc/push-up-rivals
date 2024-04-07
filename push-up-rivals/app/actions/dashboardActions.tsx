@@ -1,3 +1,4 @@
+"use server";
 import prisma from "@/lib/prismaClient";
 import { Day } from "@prisma/client";
 

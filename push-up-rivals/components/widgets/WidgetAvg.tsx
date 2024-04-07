@@ -1,15 +1,8 @@
 "use client";
-
-import { getAvgPushups } from "@/app/actions/dashboardActions";
 import { Box, Paper, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
-export default async function WidgetAvg(props: {
-	userId: string;
-	numberOfDays: number;
-}) {
-	const avgPushups = await getAvgPushups(props.userId, props.numberOfDays);
-
+export default async function WidgetAvg() {
 	return (
 		<Paper variant="outlined">
 			<Box
@@ -35,7 +28,7 @@ export default async function WidgetAvg(props: {
 						cursor: "default",
 					}}
 				>
-					{avgPushups.lastNDaysAvg}
+					100
 				</Typography>
 				<Typography
 					sx={{
@@ -43,8 +36,7 @@ export default async function WidgetAvg(props: {
 						cursor: "default",
 					}}
 				>
-					{avgPushups.evolution > 0 ? "+" : "-"}{" "}
-					{avgPushups.evolution} % from last {props.numberOfDays} days
+					+10 % from last 7 days
 				</Typography>
 			</Box>
 		</Paper>

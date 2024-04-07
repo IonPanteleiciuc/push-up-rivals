@@ -4,8 +4,10 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import { Session } from "next-auth";
 import prisma from "@/lib/prismaClient";
 import { createFromLastDayToToday } from "./actions/dayActions";
-import RandomButton from "@/components/RandomButton";
 import WidgetAvg from "@/components/widgets/WidgetAvg";
+import { Suspense } from "react";
+import Loading from "./loading";
+import LoadingWidget from "@/components/widgets/LoadingWidget";
 
 export default async function Home() {
 	const session: Session = await requireActiveSession();
@@ -43,16 +45,9 @@ export default async function Home() {
 					wrap="wrap"
 				>
 					<Grid item xs={12} md={6} lg={3}>
-						<WidgetAvg userId={connectedUser.id} numberOfDays={7} />
-					</Grid>
-					<Grid item xs={12} md={6} lg={3}>
-						{/* <WidgetAvg /> */}
-					</Grid>
-					<Grid item xs={12} md={6} lg={3}>
-						{/* <WidgetAvg /> */}
-					</Grid>
-					<Grid item xs={12} md={6} lg={3}>
-						{/* <WidgetAvg /> */}
+						<Suspense fallback={<LoadingWidget />}>
+							<WidgetAvg />
+						</Suspense>
 					</Grid>
 				</Grid>
 			</Container>
