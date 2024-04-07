@@ -6,7 +6,10 @@ import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { checkIfEmailIsAlreadyUsed, createUser } from "../app/actions";
+import {
+	checkIfEmailIsAlreadyUsed,
+	createUser,
+} from "../app/actions/userActions";
 import { useRouter } from "next/navigation";
 
 export default function SignUpForm() {

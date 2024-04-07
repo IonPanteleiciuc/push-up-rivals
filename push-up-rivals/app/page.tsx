@@ -1,9 +1,11 @@
 import ResponsiveAppBar from "@/components/AppBar";
-import SignOutButton from "@/components/SignOutButton";
 import { requireActiveSession } from "@/lib/helperFunctions";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { Session } from "next-auth";
 import prisma from "@/lib/prismaClient";
+import { createFromLastDayToToday } from "./actions/dayActions";
+import RandomButton from "@/components/RandomButton";
+import WidgetAvg from "@/components/widgets/WidgetAvg";
 
 export default async function Home() {
 	const session: Session = await requireActiveSession();
@@ -22,6 +24,8 @@ export default async function Home() {
 		return;
 	}
 
+	await createFromLastDayToToday(connectedUser.id);
+
 	return (
 		<>
 			<ResponsiveAppBar
@@ -29,18 +33,28 @@ export default async function Home() {
 					connectedUser?.firstname[0] + connectedUser?.name[0]
 				}
 			/>
-			<Container component="main">
-				<Box
-					sx={{
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-					}}
+			<Container component="main" maxWidth="xl">
+				This is the dashboard page of {connectedUser.name}
+				<Grid
+					container
+					spacing={3}
+					sx={{ mt: 1 }}
+					alignItems="center"
+					wrap="wrap"
 				>
-					<Typography>
-						This is the dashboard page of {connectedUser.name}
-					</Typography>
-				</Box>
+					<Grid item xs={12} md={6} lg={3}>
+						<WidgetAvg userId={connectedUser.id} numberOfDays={7} />
+					</Grid>
+					<Grid item xs={12} md={6} lg={3}>
+						{/* <WidgetAvg /> */}
+					</Grid>
+					<Grid item xs={12} md={6} lg={3}>
+						{/* <WidgetAvg /> */}
+					</Grid>
+					<Grid item xs={12} md={6} lg={3}>
+						{/* <WidgetAvg /> */}
+					</Grid>
+				</Grid>
 			</Container>
 		</>
 	);

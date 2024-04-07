@@ -4,6 +4,7 @@ import { User } from "@prisma/client";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import prisma from "@/lib/prismaClient";
+import { createToday } from "./dayActions";
 
 const schema = z.object({
 	email: z.string().email().min(1),
@@ -74,14 +75,6 @@ export const checkIfEmailIsAlreadyUsed = async (
 	} catch (error) {
 		return false;
 	}
-};
-
-const createToday = async (userId: string): Promise<void> => {
-	await prisma.day.create({
-		data: {
-			userId,
-		},
-	});
 };
 
 const hashData = (data: string): Promise<string> => {

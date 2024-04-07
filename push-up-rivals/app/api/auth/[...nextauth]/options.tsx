@@ -1,6 +1,6 @@
 import { NextAuthOptions, RequestInternal, getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { doPasswordMatch } from "@/app/actions";
+import { doPasswordMatch } from "@/app/actions/userActions";
 import prisma from "@/lib/prismaClient";
 
 type Credentials = {

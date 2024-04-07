@@ -70,11 +70,12 @@ function ResponsiveAppBar(props: { userInitials: string }) {
 						sx={{
 							mr: 2,
 							display: { xs: "none", md: "flex" },
-							fontWeight: 700,
+							fontWeight: 500,
 							color: "primary.main",
 							textDecoration: "none",
 							cursor: "pointer",
 							fontFamily: "Azonix",
+							mt: 0.45,
 						}}
 					>
 						{logo}
@@ -83,7 +84,10 @@ function ResponsiveAppBar(props: { userInitials: string }) {
 					<Box
 						sx={{
 							flexGrow: 1,
-							display: { xs: "flex", md: "none" },
+							display: {
+								xs: "flex",
+								md: "none",
+							},
 						}}
 					>
 						<IconButton
@@ -140,10 +144,12 @@ function ResponsiveAppBar(props: { userInitials: string }) {
 							mr: 2,
 							display: { xs: "flex", md: "none" },
 							flexGrow: 1,
-							fontWeight: 700,
+							fontWeight: 500,
 							color: "primary.main",
 							textDecoration: "none",
 							fontFamily: "Azonix",
+							fontSize: 18,
+							mt: 0.45,
 						}}
 					>
 						{logo}
