@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prismaClient";
+import { Day } from "@prisma/client";
 
 export const createToday = async (userId: string): Promise<void> => {
 	await prisma.day.create({
@@ -42,6 +43,30 @@ export const createFromLastDayToToday = async (userId: string) => {
 		}
 	}
 };
+
+export async function addPushups(
+	userId: string,
+	pushups: number
+): Promise<void> {
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+
+	const res = await prisma.day.updateMany({
+		where: {
+			userId,
+			dateTime: {
+				gte: today,
+			},
+		},
+		data: {
+			pushups: {
+				increment: pushups,
+			},
+		},
+	});
+
+	console.log("res: ", res);
+}
 
 // TODO: Delete
 export async function createNdays(userId: string, n: number, today: Date) {
