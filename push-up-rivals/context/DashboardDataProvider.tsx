@@ -38,6 +38,7 @@ export default function DashboardDataProvider({
 }: {
 	children: ReactNode;
 }) {
+	console.log("Mounted !");
 	const [totalPushups, setTotalPushups] = useState<SumPushups>({
 		totalPushups: 0,
 		evolution: 0,

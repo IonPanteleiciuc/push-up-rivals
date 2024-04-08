@@ -42,26 +42,33 @@ export default async function Home() {
 					alignItems="center"
 					wrap="wrap"
 				>
+					{/* Ok */}
 					<Grid item xs={12} md={6} lg={3}>
 						<Suspense fallback={<LoadingWidget />}>
 							<WidgetTotal userId={connectedUser.id} />
 						</Suspense>
 					</Grid>
+
+					{/* Ok */}
 					<Grid item xs={12} md={6} lg={3}>
 						<Suspense fallback={<LoadingWidget />}>
 							<WidgetAvg userId={connectedUser.id} />
 						</Suspense>
 					</Grid>
+
+					{/* Ok */}
 					<Grid item xs={12} md={6} lg={3}>
 						<Suspense fallback={<LoadingWidget />}>
 							<WidgetToday userId={connectedUser.id} />
 						</Suspense>
 					</Grid>
-					<Grid item xs={12} md={6} lg={3}>
+
+					{/* not ok */}
+					{/* <Grid item xs={12} md={6} lg={3}>
 						<Suspense fallback={<LoadingWidget />}>
 							<WidgetAddPushups userId={connectedUser.id} />
 						</Suspense>
-					</Grid>
+					</Grid> */}
 				</Grid>
 			</Container>
 		</>
