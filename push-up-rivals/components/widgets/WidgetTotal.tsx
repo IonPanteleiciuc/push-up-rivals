@@ -1,9 +1,10 @@
-import { getTotalPushups } from "@/app/actions/dashboardActions";
+"use client";
+import { useDashboardData } from "@/context/DashboardDataProvider";
 import { Box, Paper, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
-export default async function WidgetTotal(props: { userId: string }) {
-	const totalPushups = await getTotalPushups(props.userId, 7);
+export default function WidgetTotal(props: { userId: string }) {
+	const { totalPushups } = useDashboardData();
 
 	return (
 		<Paper variant="outlined">

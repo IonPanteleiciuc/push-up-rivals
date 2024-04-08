@@ -1,9 +1,10 @@
-import { getTodaysPushups } from "@/app/actions/dashboardActions";
+"use client";
+import { useDashboardData } from "@/context/DashboardDataProvider";
 import { Box, Paper, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
-export default async function WidgetToday(props: { userId: string }) {
-	const todaysPushups = await getTodaysPushups(props.userId);
+export default function WidgetToday(props: { userId: string }) {
+	const { todaysPushups } = useDashboardData();
 
 	return (
 		<Paper variant="outlined">

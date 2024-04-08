@@ -13,17 +13,14 @@ import WidgetAddPushups from "@/components/widgets/WidgetAddPushups";
 
 export default async function Home() {
 	const session: Session = await requireActiveSession();
-
 	if (!session) {
 		return;
 	}
-
 	const connectedUser = await prisma.user.findUnique({
 		where: {
 			email: session?.user?.email!,
 		},
 	});
-
 	if (!connectedUser) {
 		return;
 	}

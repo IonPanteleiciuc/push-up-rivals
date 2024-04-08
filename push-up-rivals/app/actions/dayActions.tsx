@@ -30,8 +30,6 @@ export const createFromLastDayToToday = async (userId: string) => {
 	}
 
 	if (today > lastDay) {
-		console.log("starting at: ", lastDay);
-
 		while (lastDay < today) {
 			lastDay.setDate(lastDay.getDate() + 1);
 			await prisma.day.create({
@@ -64,8 +62,6 @@ export async function addPushups(
 			},
 		},
 	});
-
-	console.log("res: ", res);
 }
 
 // TODO: Delete

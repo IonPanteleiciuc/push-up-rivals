@@ -1,9 +1,10 @@
-import { getAvgPushups } from "@/app/actions/dashboardActions";
+"use client";
+import { useDashboardData } from "@/context/DashboardDataProvider";
 import { Box, Paper, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
-export default async function WidgetAvg(props: { userId: string }) {
-	const avgPushups = await getAvgPushups(props.userId, 7);
+export default function WidgetAvg(props: { userId: string }) {
+	const { avgPushups } = useDashboardData();
 
 	return (
 		<Paper variant="outlined">

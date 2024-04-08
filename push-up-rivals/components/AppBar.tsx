@@ -45,13 +45,11 @@ function ResponsiveAppBar(props: { userInitials: string }) {
 
 	const handleMenuClick = async (setting: string) => {
 		if (setting === "Logout") {
-			console.log(setting);
 			await signOut({ callbackUrl: "/sign-in" });
 			handleCloseUserMenu();
 		}
 
 		if (setting === "Profile") {
-			console.log(setting);
 			router.push("/profile");
 			handleCloseUserMenu();
 		}

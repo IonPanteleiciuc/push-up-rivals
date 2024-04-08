@@ -1,5 +1,6 @@
 "use client";
 import { addPushups } from "@/app/actions/dayActions";
+import { useDashboardData } from "@/context/DashboardDataProvider";
 import {
 	Paper,
 	Box,
@@ -9,19 +10,24 @@ import {
 	Typography,
 	Button,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function WidgetAddPushups(props: { userId: string }) {
 	const [input, setInput] = useState("");
+	const { fetchData } = useDashboardData();
+
+	useEffect(() => {
+		fetchData(props.userId, 7);
+	});
 
 	const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
-		console.log("event: ", event.currentTarget.value);
 		const value = event.currentTarget.value;
-		// regex to only allow numbers, negative number and void
+
 		const regex = /^-?\d*$/;
 		if (regex.test(value)) {
 			setInput(value);
+			fetchData(props.userId, 7);
 		}
 	};
 
